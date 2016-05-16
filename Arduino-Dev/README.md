@@ -1,0 +1,1 @@
+This folder is for Arduino dev files.  The first project is aimed at building a temprature sensor and heat coil controller.  I will be using the DHT-11 sensor that senses both temp and humdidity.  In later progress I will switch to the DHT-22 sensor as it is more accurate.  

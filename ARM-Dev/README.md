@@ -1,0 +1,1 @@
+This folder is for ARM dev files.   I found a very good set of tutorials on youtube <insert address> that I will be following along with developing on an ARM cortex based board using IAR IDE and emulation environment.  This will contain the code that I type up as well as my notes as comments.  
