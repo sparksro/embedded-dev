@@ -1,9 +1,12 @@
 // 
 //   FILE:  dht11_temp_humidity.ino
-//   PURPOSE: Read temp and humidity and return in F and % to serial out
-//   pin out and attaching the dht-11 to the arduino is very easy.  The bread board version lines are +,_ and data.  Data goes to an assigned digital pin.
-//     here its 3.  The vcc attaches to arduino 5 volt and ground goes to ground.  A good diagram can be found here: https://brainy-bits.com/tutorials/dht11-tutorial/
-//     THe plain sensor adds a 5 k pull up resistor to the data line as pictured here: http://learning.grobotronics.com/2013/07/measuring-humidity-with-dht11-sensor/
+//   PURPOSE: Read temp and humidity and return in F and % to serial out.
+//   The pin out and attaching the dht-11 to the arduino is easy.  The 
+//   bread board lines are +,_ and data <pin assigned>. The vcc attaches 
+//   to arduino 5 volt and ground goes to ground.  A good diagram can be 
+//   found here: https://brainy-bits.com/tutorials/dht11-tutorial/
+//   THe plain sensor adds a 5 k pull up resistor to the data line as 
+//   pictured here: http://learning.grobotronics.com/2013/07/measuring-humidity-with-dht11-sensor/
 //
 #include <dht11.h>
 
@@ -11,7 +14,6 @@ dht11 DHT11;
 #define DHT11_PIN 7
 int correction = 2;// correction for my specific dht11 so it matches another thermometer 
 // in the house. This probably will not be necessary in your case.
-
 
 // **** Functions **** 
 //Celsius to Fahrenheit conversion
@@ -28,7 +30,6 @@ double dewPointFast(double celsius, double humidity)// converted to F
 	double Td = (b * temp) / (a - temp);
   return 1.8 * Td + 32 + correction;
 }
-
 
 
 void setup()
