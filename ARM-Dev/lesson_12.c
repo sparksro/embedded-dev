@@ -1,12 +1,10 @@
 // lesson 12 - structures and CMSIS
 //
 #include <stdint.h>
-#include"tm4c123gh6pm.h"
-//#include"tm4c_cmsis.h" // new header contains structures we can use to access data structure members.
-// Note: I did not change the access methods as he did as there seems to be some access errors with the 7.4 version and Windows 10
-// It did not know where to find the the core_cmsis.h file.  I copied the file into the project file and that just kicked the can down the
-// road further leading to more errors.  It continues to work with the manual hard coding.
 #include "delay.h"
+//#include"tm4c123gh6pm.h"
+#include"tm4c_cmsis.h" // New header containing structures we can use to access data structure members.
+// New access methods operational using TI's pre setup structures.
 
 #define LED_RED (1U << 1)
 #define LED_BLUE (1U << 2)
@@ -38,7 +36,7 @@ typedef struct {
 Window w, w2;
 Triangle t;
 
-// Lesson goes on to review other structures and pointers.  Using pointers to structure members is ofter more efficient than passing the memory arround.
+// Lesson goes on to review other structures and pointers.  Using pointers to structure members is ofter more efficient than passing the memory around.
 // The functionality that we hard coded / accessed as pre-processor macros previously to turn on and off the LEDs can be accessed through Structures.  See
 //
 Point p1, p2;
@@ -73,28 +71,27 @@ int main()
   pp->x = 1u;
   wp->top_left = *pp;
 
-  // We can access the same thing we did to turn LEDs on and off but with pre-defined structures pre-made by the manufacturer.
-  // SYSCTL_RCGCGPIO_R |= (1U << 5);// enable clock for GPIOF
-  //SYSCTL->RCGC2 |= (1U << 5);
-  SYSCTL_GPIOHBCTL_R = (1U << 5);// enable AHB for GPIOF
-  //SYSCTL->GPIOHSCTL = (1U << 5);
+  // We can access the same thing we did to turn LLEDs on and off but with predefined structures pre-made by the manufacturer.
+  //SYSCTL_RCGCGPIO_R |= (1U << 5);// enable clock for GPIOF
+  SYSCTL->RCGC2 |= (1U << 5);
+  //SYSCTL_GPIOHBCTL_R = (1U << 5);// enable AHB for GPIOF
+  SYSCTL->GPIOHSCTL = (1U << 5);
 
-  GPIO_PORTF_AHB_DIR_R |= ( LED_RED | LED_BLUE | LED_GREEN );
-  //GPIOF_HS->DIR |= ( LED_RED | LED_BLUE | LED_GREEN );
-  GPIO_PORTF_AHB_DEN_R |= ( LED_RED | LED_BLUE | LED_GREEN );
-  //GPIO_HS->DEN |= ( LED_RED | LED_BLUE | LED_GREEN );
+  //GPIO_PORTF_AHB_DIR_R |= ( LED_RED | LED_BLUE | LED_GREEN );
+  GPIOF_HS->DIR |= ( LED_RED | LED_BLUE | LED_GREEN );
+  //GPIO_PORTF_AHB_DEN_R |= ( LED_RED | LED_BLUE | LED_GREEN );
+  GPIO_HS->DEN |= ( LED_RED | LED_BLUE | LED_GREEN );
 
-  GPIO_PORTF_AHB_DATA_BITS_R[LED_BLUE] = LED_BLUE;
-  //GPIO_HS->DATA_Bits[LED_BLUE] = LED_BLUE;
+  //GPIO_PORTF_AHB_DATA_BITS_R[LED_BLUE] = LED_BLUE;
+  GPIO_HS->DATA_Bits[LED_BLUE] = LED_BLUE;
   while (1){
-    GPIO_PORTF_AHB_DATA_BITS_R[LED_RED] = LED_RED;
-    //GPIO_HS->DATA_Bits[LED_RED] = LED_RED;
+    //GPIO_PORTF_AHB_DATA_BITS_R[LED_RED] = LED_RED;
+    GPIO_HS->DATA_Bits[LED_RED] = LED_RED;
     delay(350000);
-    GPIO_PORTF_AHB_DATA_BITS_R[LED_RED] = 0;
-    //GPIO_HS->DATA_Bits[LED_RED] = LED_RED;
+    //GPIO_PORTF_AHB_DATA_BITS_R[LED_RED] = 0;
+    GPIO_HS->DATA_Bits[LED_RED] = 0;
     delay(350000);
     }
 
     //return 0;
 }
-
